@@ -4,11 +4,14 @@ const app = express();
 const morgan = require('morgan');
 //to make the data a readable format
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 
 //the routes the project
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/MEPriceFineArt",{ useNewUrlParser: true });
 
 //this is for displaying info in the terminal
 app.use(morgan('dev'));
