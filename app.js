@@ -16,6 +16,9 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/MEPriceFi
 //this is for displaying info in the terminal
 app.use(morgan('dev'));
 
+//make the pics publicly available
+app.use('/uploads', express.static('uploads'));
+
 //i want to parse url encoded bodies true for rich bodies false for simple ones
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
