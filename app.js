@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 //the routes the project
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+const userRoutes = require('./api/routes/users');
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost:27017/MEPriceFineArt",{ useNewUrlParser: true });
 
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 //routes which should handle requrests
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
+app.use('/users', userRoutes);
 
 //if it never hit the above routes 404 for not found
 app.use((req, res, next) => {
