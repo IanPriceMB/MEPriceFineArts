@@ -44,7 +44,7 @@ app.use((req, res, next) => {
 //routes which should handle requrests
 app.use('/products', productRoutes);
 app.use('/orders', orderRoutes);
-app.use('/users', userRoutes);
+app.use('/user', userRoutes);
 
 //if it never hit the above routes 404 for not found
 app.use((req, res, next) => {
