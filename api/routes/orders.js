@@ -4,7 +4,8 @@ const checkAuth = require('../auth/check-auth');
 
 const OrdersController = require('../controllers/orders')
 
-router.get('/', checkAuth, OrdersController.orders_get_all);
+// checkAuth,
+router.get('/', OrdersController.orders_get_all);
 
 router.post('/', OrdersController.orders_create_order);
 

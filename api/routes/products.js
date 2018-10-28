@@ -35,11 +35,11 @@ const Product = require('../models/product');
 router.get('/', (req, res, next) => {
     //where and limit to select further see docs
     Product.find()
-    .select(' name price _id productImage')
-    .exec()
+    .select('name price _id productImage')
+    // .exec()
     .then(docs => {
         const response = {
-            count: docs. length,
+            count: docs.length,
             products: docs.map(doc => {
                 return {
                     name: doc.name, 
@@ -48,18 +48,18 @@ router.get('/', (req, res, next) => {
                     _id: doc._id,
                     request: {
                         type: 'GET',
-                        url: 'http://localhost:3000/products/'+doc._id
+                        url: 'http://localhost:3000/products/'+ doc._id
                     }
                 }
             })
         }
-        // if (docs.length >= 0){
+        if (docs.length >= 0){
         res.status(200).json(response);
-        // } else {
-        //     res.status(404).json({
-        //         message: 'no entries found'
-        //     });
-        // }
+        } else {
+            res.status(404).json({
+                message: 'no entries found'
+            });
+        }
     })
     .catch(err => {
         console.log(err);
