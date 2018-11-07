@@ -69,7 +69,7 @@ router.get('/', (req, res, next) => {
     })
 });
 
-router.post('/', checkAuth, upload.single('productImage'),(req, res, next) => {
+router.post('/', upload.single('productImage'),checkAuth,(req, res, next) => {
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
