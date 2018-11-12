@@ -1,108 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+//const checkAuth = require('../auth/check-auth');
 
-const User = require('../models/user');
+const UsersController = require('../controllers/users');
 
-router.post('/signup', (req, res, next) => {
-    User.find({email: req.body.email})
-    .exec()
-    .then(user => {
-        if (user.length >= 1) {
-            return res.status(409).json({
-                message: "email already exists"
-            });
-        }
-        else {
-            bcrypt.hash(req.body.password, 10, (err, hash) => {
-                if (err){
-                    return res.status(500).json({
-                        erros: err
-                    });
-                } 
-                else {
-                    const user = new User({
-                        _id: new mongoose.Types.ObjectId(),
-                        email: req.body.email,
-                        password: hash
-                    });
-                    user
-                        .save()
-                        .then(result => {
-                            console.log(result);
-                            res.status(201).json({
-                                message: 'User created'
-                            });
-                        })
-                        .catch(err => {
-                            console.log(err);
-                            res.status(500).json({
-                                error: err
-                            })
-                        })
-                }
-            });
-        }
-    })
-});
+// Currently disabled as we only have one (1) Admin that is
+// ever logging in.
 
-router.post('/login', (req,res,next) => {
-    User.find({ email:req.body.email})
-    .exec()
-    .then(user => {
-        if(user.length < 1){
-            return res.status(401).json({
-                message: 'Auth Failed'
-            })
-        }
-        bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-            if(err){
-                return res.status(401).json({
-                    message: 'Auth Failed'
-                })
-            }
-            if(result){
-                const token = jwt.sign({
-                    email: user[0].email,
-                    userId: user[0]._id
-                }, 
-                process.env.JWT_KEY, 
-                {
-                    expiresIn: '1h'
-                })
-                return res.status(200).json({
-                    message: 'Auth Successful',
-                    token: token
-                })
-            }
-            return res.status(401).json({
-                message: 'Auth Failed'
-            })
-        })
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error: err
-        })
-    })
-})
+//router.post('/signup', UsersController.users_signup_user);
 
-router.delete('/:userId', (req, res, next) => {
-    User.remove({ _id: req.params.userId})
-    .exec()
-    .then(result => {
-        res.status(200).json({
-            message: 'User deleted'
-        })
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(500).json({
-            error: err
-        })
-    })
-})
+router.post('/login', UsersController.users_login_user);
+
+// There is no reason to have the Admin able to delete themselves
+// therefor the delete is currently disabled.
+
+//router.delete('/:userId', checkAuth, UsersController.users_delte_user);
+
 module.exports = router;

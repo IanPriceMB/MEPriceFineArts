@@ -4,13 +4,16 @@ const checkAuth = require('../auth/check-auth');
 
 const OrdersController = require('../controllers/orders')
 
-// checkAuth,
-router.get('/', OrdersController.orders_get_all);
+// This file is not currently in use.
+// It is simply here in case the Contractor wishes to add
+// the ability to make purchases through their site at a later date.
 
-router.post('/', OrdersController.orders_create_order);
+// router.get('/', OrdersController.orders_get_all);
 
-router.get('/:orderId', OrdersController.orders_get_order);
+// router.post('/', OrdersController.orders_create_order);
 
-router.delete('/:orderId', checkAuth, OrdersController.orders_delete_order);
+// router.get('/:orderId', OrdersController.orders_get_order);
+
+// router.delete('/:orderId', checkAuth, OrdersController.orders_delete_order);
 
 module.exports = router;

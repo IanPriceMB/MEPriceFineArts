@@ -34,7 +34,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 
     'Origin, X-Requested-With, Content-Type, Accept, Authorization'
     );
-    //OPTIONS  request iss ent first to see fi this kind of request can be made
+    //OPTIONS  request is sent first to see if this kind of request can be made
     if(req.method === 'OPTIONS'){
         //these are the methods the browser may send
         res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');

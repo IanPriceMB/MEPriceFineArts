@@ -2,6 +2,10 @@ const Order = require('../models/order');
 const Product = require('../models/product');
 const mongoose = require('mongoose');
 
+// This file is not currently in use.
+// It is simply here in case the Contractor wishes to add
+// the ability to make purchases through their site at a later date.
+
 exports.orders_get_all = (req, res, next) => {
     Order.find()
     .populate('product', 'name')
@@ -35,10 +39,10 @@ exports.orders_create_order = (req, res, next) => {
         if(!product){
             return res.status(404).json({
                 message: "product not found"
-            })
+            });
         }
         const order = new Order({
-            _id: mongoose.Types.ObjectId(),
+            _id: new mongoose.Types.ObjectId(),
             quantity: req.body.quantity,
             product: req.body.productId
         });
@@ -66,7 +70,7 @@ exports.orders_create_order = (req, res, next) => {
             error: err
         });
     });
-}
+};
 
 exports.orders_get_order = (req, res, next) => {
     Order.findById(req.params.orderId)
@@ -76,7 +80,7 @@ exports.orders_get_order = (req, res, next) => {
         if(!order){
             return res.status(404).json({
                 message: 'Order not found'
-            })
+            });
         }
         res.status(200).json({
             order: order,
@@ -90,8 +94,8 @@ exports.orders_get_order = (req, res, next) => {
         res.status(500).json({
             error: err
         });
-    })
-}
+    });
+};
 
 exports.orders_delete_order = (req, res, next) => {
     Order.remove({_id: req.params.orderId})
@@ -104,11 +108,11 @@ exports.orders_delete_order = (req, res, next) => {
                 url: 'http://localhost:3000/orders',
                 body: { productId: 'ID', quantity: 'Number'}
             }
-        })
+        });
     })
     .catch(err => {
         res.status(500).json({
             error: err
         });
-    })
-}
+    });
+};
