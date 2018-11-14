@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const mongoose = require('mongoose');
+var fs = require('fs');
 
 exports.products_get_all = (req, res, next) => {
     //where and limit to select further see docs
@@ -39,8 +40,6 @@ exports.products_get_all = (req, res, next) => {
 };
 
 exports.products_create_product = (req, res, next) => {
-    console.log(req.body)
-    console.log(req.file)
     const product = new Product({
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
@@ -78,7 +77,10 @@ exports.products_get_product = (req, res, next) => {
     .then(doc => {
         console.log('from database ' + doc);
         if(doc){
-            res.status(200).json(doc);
+            // res.status(200).json(doc);
+            fileToLoad = fs.readFileSync(file);
+            res.writeHead(200, {'Content-Type':  contentType });
+            res.end(fileToLoad, 'binary');
         } else {
             res.status(404).json({message: 'no valid entry found for provided ID'})   
         }

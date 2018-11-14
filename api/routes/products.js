@@ -29,16 +29,13 @@ const fileFilter = (req, file, cb) => {
 // The multer package allows us to upload files 
 const upload = multer({
     storage: storage,
-    // limits: {
-    //     fileSize: 1024*1024*5
-    // },
     fileFilter: fileFilter
-});
+}).single('picture');
 
 // Routes for /products
 router.get('/', ProductsController.products_get_all);
 
-router.post('/', upload.single('picture'), checkAuth, ProductsController.products_create_product);
+router.post('/', upload, checkAuth, ProductsController.products_create_product);
 
 router.get('/:productId', ProductsController.products_get_product);
 
