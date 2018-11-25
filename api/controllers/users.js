@@ -49,19 +49,18 @@ exports.users_signup_user = (req, res, next) => {
 
 // Check Admin credentials
 exports.users_login_user = (req,res,next) => {
-    console.log(req);
     User.find({ email:req.body.email})
     .exec()
     .then(user => {
         if(user.length < 1){
             return res.status(401).json({
-                message: '1Auth Failed'
+                message: 'Auth Failed'
             });
         }
         bcrypt.compare(req.body.password, user[0].password, (err, result) => {
             if(err){
                 return res.status(401).json({
-                    message: '2Auth Failed'
+                    message: 'Auth Failed'
                 });
             }
             if(result){
@@ -79,7 +78,7 @@ exports.users_login_user = (req,res,next) => {
                 });
             }
             return res.status(401).json({
-                message: '3Auth Failed'
+                message: 'Auth Failed'
             });
         });
     })
