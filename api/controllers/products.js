@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 exports.products_get_all = (req, res, next) => {
     //where and limit to select further see docs
     Product.find()
-    .select('name price _id productImage')
-    // .exec()
+    .select('name price _id productImage description')
+    .exec()
     .then(docs => {
         const response = {
             count: docs.length,
@@ -14,21 +14,22 @@ exports.products_get_all = (req, res, next) => {
                     name: doc.name, 
                     price: doc.price,
                     productImage: doc.productImage,
+                    description: doc.description,
                     _id: doc._id,
                     request: {
                         type: 'GET',
                         url: 'http://localhost:3000/products/'+ doc._id
                     }
-                }
+                };
             })
-        }
+        };
         if (docs.length >= 0){
         res.status(200).json(response);
         } else {
             res.status(404).json({
                 message: 'no entries found'
             });
-        }
+        };
     })
     .catch(err => {
         console.log(err);
@@ -43,10 +44,10 @@ exports.products_create_product = (req, res, next) => {
         _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         price: req.body.price,
-        productImage: req.file.path
+        productImage: req.file.path,
+        description: req.body.description
     });
     product.save().then( result => {
-        console.log(result);
         res.status(201).json({
             message: 'Created product',
             createdProduct: {
@@ -61,7 +62,7 @@ exports.products_create_product = (req, res, next) => {
         });
     })
     .catch(err => {
-        console.log(err)
+        console.log(err);
         res.status(500).json({
             error: err
         });
@@ -69,10 +70,9 @@ exports.products_create_product = (req, res, next) => {
 };
 
 exports.products_get_product = (req, res, next) => {
-    console.log('im here')
     const id = req.params.productId;
     Product.findById(id)
-    .select('name price _id productImage')
+    .select('name price _id productImage description')
     .exec()
     .then(doc => {
         console.log('from database ' + doc);
@@ -109,7 +109,7 @@ exports.products_update_product = (req, res, next) => {
     const id = req.params.productId;
     const updateOps = {};
 
-    //dynamicly determin what to update
+    // Dynamically determine what to update
     for(const ops of req.body){
         updateOps[ops.propName] = ops.value
     }

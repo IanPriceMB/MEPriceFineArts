@@ -8,14 +8,12 @@ const morgan = require('morgan');
 //to make the data a readable format
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Grid = require('gridfs-stream');
 
 //the routes the project
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 const userRoutes = require('./api/routes/users');
 
-let gfs; 
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/MEPriceFineArt", { useNewUrlParser: true });
 
@@ -23,18 +21,8 @@ mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/MEPriceFineArt"
 app.use(bodyParser.urlencoded({extended: true, limit: '50mb'}));
 app.use(bodyParser.json({limit: '50mb'}));
 
-
-
-// conn.once('open', () => {
-//     gfs = Grid(conn.db, mongoose.mongo);
-//     gfs.collection('uploads');
-// });
-
-
 //this is for displaying info in the terminal
 app.use(morgan('dev'));
-
-console.log(path.join(__dirname, '/uploads'));
 
 // //make the pics publicly available
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));

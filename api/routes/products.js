@@ -3,12 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const multer = require('multer');
 const checkAuth = require('../auth/check-auth');
-
-const path = require('path');
-const crypto = require('crypto');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-
 const ProductsController = require('../controllers/products');
 
 // This is for storing the files in a local folder
@@ -30,28 +24,6 @@ const fileFilter = (req, file, cb) => {
         cb(null, false);
     }
 };
-
-const mongoURI = process.env.MONGODB_URI || "mongodb://localhost/MEPriceFineArt";
-
-// const storage2 = new GridFsStorage({
-//     url: "mongodb://localhost/MEPriceFineArt",
-//     file: (req, file) => {
-//       return new Promise((resolve, reject) => {
-//         crypto.randomBytes(16, (err, buf) => {
-//           if (err) {
-//             return reject(err);
-//           }
-//           const filename = buf.toString('hex') + path.extname(file.originalname);
-//           const fileInfo = {
-//             filename: filename,
-//             bucketName: 'uploads'
-//           };
-//           resolve(fileInfo);
-//         });
-//       });
-//     }
-//   });
-// const upload2 = multer({ storage }).single('picture');
 
 // The multer package allows us to upload files 
 const upload = multer({
