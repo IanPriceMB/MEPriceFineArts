@@ -1,0 +1,124 @@
+import React, {Component} from 'react';
+import API from '../utils/API';
+import './css/Admin.css';
+
+class Admin extends Component {
+
+    state = {
+        password: 'Mike Price',
+        email: 'meprice@gmail.com',
+        Admin: null,
+        adminLoaded: false,
+        name: '',
+        price: 0,
+        products: []
+    };
+
+    handleInputChange = event => {
+        // Getting the value and name of the input which triggered the change
+        let value = event.target.value;
+        const name = event.target.name;
+    
+        if (name === "password") {
+          value = value.substring(0, 15);
+        }
+        // Updating the input's state
+        this.setState({
+          [name]: value
+        });
+      };
+      
+    login = (event) => {
+        event.preventDefault();
+
+        API.loginAdmin(this.state)
+        .then(dataWrappedByPromise => dataWrappedByPromise.json())
+        .then(res => {
+            if(res.message === 'Auth Successful'){
+                this.setState({adminLoaded: true, Admin: res}); 
+
+                this.getProducts();
+            }
+        })
+        .catch(err => console.log(err));
+    };
+
+    newProduct = (event) => {
+        event.preventDefault();
+        
+        let formElement = document.querySelector("form");
+        let formData = new FormData(formElement);
+
+        API.newProduct( this.state.Admin.token, formData)
+        .then(res => {console.log(res); document.querySelector("form").reset();})
+        .catch(err => console.log(err));
+    };
+
+    getProducts = () => {
+        API.getAllProducts()
+        .then(dataWrappedByPromise => dataWrappedByPromise.json())
+        .then(res => {this.setState({products: res}); console.log(this.state.products)})
+        .catch(err => console.log(err));
+    };
+
+    getOneProduct = (event) => {
+        event.preventDefault();
+        API.getOneProduct(this.state.products.products[19]._id)
+        .then(res => console.log(res))
+        .catch(err => console.log(err));
+    };
+
+    
+  render(){
+    return(
+      <div className="admin">
+      {!this.state.adminLoaded ? (
+        <button className="login" onClick={(e) => this.login(e)}>Login</button>
+      ):
+      (
+      <div className="container">
+        <h1>Welcome back!</h1>
+        <div className="admin-form">
+          <h3>Upload A New Piece</h3>
+          <form>
+            Title of the Piece:<br/>
+            <input type="text" name="name" value={this.state.title} onChange={this.handleInputChange} />
+            <br/>
+            Price of the Piece (currently not in use):<br/>
+            <input type="number" name="price" value={this.state.price} onChange={this.handleInputChange} />
+            <br/>
+            Description for the Piece:<br/>
+            <textarea name="description" rows="10" cols="50" />
+            <br/>
+            Choose the file (jpeg/png):
+            <input type="file" name="picture" />
+            <br/><br/>
+            <button onClick={(e) => this.newProduct(e)}>submit</button>
+          </form>
+        </div>
+        {this.state.products.count > 0 ? (
+            <div className="allPieces">
+            {(this.state.products.products).map( product => (
+              <div key={product._id}>
+                <h4>{product.name}</h4>
+                <img src={product.productImage} alt={product.name} />
+                <p>{product.description}</p>
+                <div>Price: {product.price}</div>
+                <button>Update</button>
+                <button>Delete</button>
+              </div>
+            ))}
+            </div>
+        ):(<div></div>)}
+        <footer>
+          
+        <button className="logout" onClick={(e) => this.logout(e)}>Logout</button>
+        </footer>
+      </div>
+      )}
+      </div>
+    )
+};
+}
+export default Admin;
+
