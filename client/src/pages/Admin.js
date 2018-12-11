@@ -11,6 +11,7 @@ class Admin extends Component {
         adminLoaded: false,
         name: '',
         price: 0,
+        description: '',
         products: []
     };
 
@@ -68,6 +69,23 @@ class Admin extends Component {
         .catch(err => console.log(err));
     };
 
+    deleteProduct = (id) => {
+      API.deleteProduct(this.state.Admin.token, id)
+      .then(res => this.getProducts())
+      .catch(err => console.log(err));
+    }
+
+    updateProduct = (event, id) => {
+      event.preventDefault();
+
+      let formElement = document.getElementById("update-form");
+      let formData = new FormData(formElement);
+
+      API.updateProduct(this.state.Admin.token, formData, id)
+      .then(res => this.getProducts())
+      .catch(err => console.log(err));
+    }
+
     
   render(){
     return(
@@ -100,12 +118,20 @@ class Admin extends Component {
             <div className="allPieces">
             {(this.state.products.products).map( product => (
               <div key={product._id}>
-                <h4>{product.name}</h4>
                 <img src={product.productImage} alt={product.name} />
-                <p>{product.description}</p>
-                <div>Price: {product.price}</div>
-                <button>Update</button>
-                <button>Delete</button>
+                <form>
+                  Title of the Piece:<br/>
+                  <input type="text" name="name" defaultValue={product.name} />
+                  <br/>
+                  Price of the Piece (currently not in use):<br/>
+                  <input type="number" name="price" defaultValue={product.price} />
+                  <br/>
+                  Description for the Piece:<br/>
+                  <textarea name="description" rows="10" cols="50" defaultValue={product.description} />
+                  <br/>
+                  <button onClick={(e) => this.updateProduct(e, product._id)}>update</button>
+                </form>
+                <button onClick={() => this.deleteProduct(product._id)}>Delete</button>
               </div>
             ))}
             </div>

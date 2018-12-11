@@ -58,21 +58,15 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-
-.allPieces > div > h4{
-  width: 100%;
-}
 .allPieces > div > img{
   width: 30%;
 }
-.allPieces > div > p{
+.allPieces > div > form{
   width: 70%;
-}
-.allPieces > div > div{
-  width: 20%;
 }
 .allPieces > div > button{
   width: 20%;
+  align-self: flex-end;
 }
 .allPieces {
   overflow-y: scroll;
