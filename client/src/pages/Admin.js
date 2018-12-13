@@ -32,7 +32,14 @@ class Admin extends Component {
   login = (event) => {
       event.preventDefault();
 
-      API.loginAdmin(this.state)
+      let formData = new FormData((event.target).parentNode);
+
+      let object = {};
+      formData.forEach(function(value, key){
+        object[key] = value;
+      });
+
+      API.loginAdmin(object)
       .then(dataWrappedByPromise => dataWrappedByPromise.json())
       .then(res => {
           if(res.message === 'Auth Successful'){
@@ -44,31 +51,33 @@ class Admin extends Component {
       .catch(err => console.log(err));
   };
 
+  logout = (event) => {
+    event.preventDefault();
+
+    this.setState({adminLoaded: false, Admin: null})
+  };
+
   newProduct = (event) => {
     event.preventDefault();
     
     let formData = new FormData((event.target).parentNode);
 
-    for(var pair of formData.entries()) {
-      console.log(pair[0]+ ', '+ pair[1]); 
-    }
-
     API.newProduct( this.state.Admin.token, formData)
-    .then(res => {console.log(res); document.querySelector("form").reset();this.getProducts();})
+    .then(res => {
+      console.log(res); 
+      document.querySelector("form").reset();
+      this.getProducts();
+    })
     .catch(err => console.log(err));
   };
 
   getProducts = () => {
     API.getAllProducts()
     .then(dataWrappedByPromise => dataWrappedByPromise.json())
-    .then(res => {this.setState({products: res}); console.log(this.state.products)})
-    .catch(err => console.log(err));
-  };
-
-  getOneProduct = (event) => {
-    event.preventDefault();
-    API.getOneProduct(this.state.products.products[19]._id)
-    .then(res => console.log(res))
+    .then(res => {
+      this.setState({products: res});
+      console.log(this.state.products);
+      })
     .catch(err => console.log(err));
   };
 
@@ -92,12 +101,19 @@ class Admin extends Component {
     .catch(err => console.log(err));
   }
 
-    
   render(){
     return(
       <div className="admin">
       {!this.state.adminLoaded ? (
-        <button className="login" onClick={(e) => this.login(e)}>Login</button>
+        <form>
+          Email:<br/>
+          <input type="email" name="email" value={this.state.email} onChange={this.handleInputChange} />
+          <br/>            
+          Password:<br/>
+          <input type="text" name="password" value={this.state.password} onChange={this.handleInputChange} />
+          <br/>
+          <button className="login" onClick={(e) => this.login(e)}>Login</button>
+        </form>
       ):
       (
       <div className="container">
@@ -127,15 +143,15 @@ class Admin extends Component {
                 <img src={product.productImage} alt={product.name} />
                 <form>
                   Title of the Piece:<br/>
-                  <input type="text" name="name" value={this.state.title} onChange={this.handleInputChange} /><br/>
+                  <input type="text" name="name" value={this.state.uname} onChange={this.handleInputChange} /><br/>
                   Current title: {product.name}
                   <br/>
                   Price of the Piece (currently not in use):<br/>
-                  <input type="number" name="price" value={this.state.price} onChange={this.handleInputChange} /><br/>
+                  <input type="number" name="price" value={this.state.uprice} onChange={this.handleInputChange} /><br/>
                   Current Price: {product.price}
                   <br/>
                   Description for the Piece:<br/>
-                  <textarea name="description" rows="10" cols="50" value={this.state.description} onChange={this.handleInputChange} /><br/>
+                  <textarea name="description" rows="10" cols="50" value={this.state.udescription} onChange={this.handleInputChange} /><br/>
                   Current Description: {product.description}
                   <br/>
                   <button onClick={(e) => this.updateProduct(e, product._id)}>update</button>

@@ -6,9 +6,11 @@ export default {
     });
   },
   loginAdmin: function(adminData){
+    console.log(adminData)
     return fetch('/user/login', {
       method: "POST", 
       headers: {
+        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(adminData)
