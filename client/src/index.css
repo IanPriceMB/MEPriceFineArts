@@ -8,4 +8,7 @@ body, html, .App, #root{
   -moz-osx-font-smoothing: grayscale;
 
   font-family: 'Times New Roman', Times, serif;
+
+  background-color: #584f4a;
+  color: #ccac7e;
 }

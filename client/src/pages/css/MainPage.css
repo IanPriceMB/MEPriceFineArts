@@ -43,6 +43,15 @@
 }
 
 .Gallery > img {
+  width: 30%;
+  margin: 1.16%;
+}
+
+.About {
+  margin-top: 5%;
   width: 40%;
-  margin: 5%;
+  font-size: 1.5em;
+}
+.About > p:first-of-type{
+  margin-top: 0;
 }
