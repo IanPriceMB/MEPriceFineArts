@@ -6,7 +6,6 @@ export default {
     });
   },
   loginAdmin: function(adminData){
-    console.log(adminData)
     return fetch('/user/login', {
       method: "POST", 
       headers: {
