@@ -4,6 +4,8 @@ import Header from '../components/Header';
 
 class MainPage extends Component {
 
+  
+
   render(){
     return(
       <div className="MainPage">

@@ -7,8 +7,8 @@ body, html, .App, #root{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  font-family: 'Times New Roman', Times, serif;
+  font-family: 'Meddon', Arial, Helvetica, sans-serif;
 
-  background-color: #584f4a;
-  color: #ccac7e;
+  background-color: #918179;
+  color: #ffffff;
 }
