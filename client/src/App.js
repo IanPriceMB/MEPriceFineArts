@@ -1,31 +1,44 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-import MainPage from "./pages/MainPage";
+
+// Pages
 import Admin from "./pages/Admin";
-import About from './components/About';
-import Gallery from './components/Gallery';
-import Contact from './components/Contact';
-import Archives from './components/Archives';
-import LandingPage from './pages/landingPage/LandingPage';
+import Homepage from "./pages/Home";
+import About from './pages/About';
+import Gallery from './pages/Gallery';
+import Contact from './pages/Contact';
+
+// Components
+import Header from './components/Header'
 
 
 class App extends Component {
+  constructor(){
+    this.state = {
+      location: 'Home'
+    };
+  };
+
+  changeLocation = location => {
+    this.setState({location})
+  }
+
   render() {
     return (
-      <Router>
-        <div className="App">
-          <Route exact path="/" component={LandingPage} />
-            <div>
-              <Route path="/about" component={About} />
-              <Route path="/gallery" component={Gallery} />
-              <Route path="/contact" component={Contact} />
-              <Route path="/archives" component={Archives} />
-            </div>
-          <Route exact path="/admin" component={Admin} />
-        </div>
-    </Router>
+      <div className="App">
+        <Header></Header>
+        {this.state.location == 'Home' ? 
+        <Homepage></Homepage> :
+        this.state.location == 'About' ?
+        <About></About> :
+        this.state.location == 'Gallery' ?
+        <Gallery></Gallery> :
+        this.state.location == 'Contact' ?
+        <Contact></Contact> : 
+        this.state.location == 'Admin' ?
+        <Admin></Admin> : null}
+      </div>
     );
-  }
-}
+  };
+};
 
 export default App;
