@@ -12,30 +12,39 @@ import Header from './components/Header'
 
 
 class App extends Component {
-  constructor(){
+  constructor(props){
+    super(props)
     this.state = {
       location: 'Home'
     };
   };
 
   changeLocation = location => {
-    this.setState({location})
-  }
+    this.setState({location});
+  };
+
+  componentDidMount(){
+    if(window.location.pathname === '/Admin' || window.location.pathname === '/admin'){
+      this.changeLocation('Admin');
+    };
+  };
 
   render() {
     return (
       <div className="App">
-        <Header></Header>
-        {this.state.location == 'Home' ? 
-        <Homepage></Homepage> :
-        this.state.location == 'About' ?
-        <About></About> :
-        this.state.location == 'Gallery' ?
-        <Gallery></Gallery> :
-        this.state.location == 'Contact' ?
-        <Contact></Contact> : 
-        this.state.location == 'Admin' ?
-        <Admin></Admin> : null}
+        {this.state.location === 'Admin' ? null :
+        <Header click={this.changeLocation}></Header>}
+        
+        {this.state.location === 'Home' ? 
+        (<Homepage click={this.changeLocation}></Homepage>) :
+        this.state.location === 'About' ?
+        (<About></About>) :
+        this.state.location === 'Gallery' ?
+        (<Gallery></Gallery>) :
+        this.state.location === 'Contact' ?
+        (<Contact></Contact>) : 
+        this.state.location === 'Admin' ?
+        (<Admin></Admin>) : (null)}
       </div>
     );
   };

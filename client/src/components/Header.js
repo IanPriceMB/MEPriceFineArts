@@ -1,18 +1,16 @@
 import React from 'react';
-import {NavLink, Link} from 'react-router-dom';
 
 const Header = (props) => (
   <header>
     <nav>
       <div></div>
-      <div><Link to='/home'>M.E. Price Fine Art</Link></div>
+      <div>M.E. Price Fine Art</div>
       <div>
         <ul>
-          <li><NavLink to='/home'>Home</NavLink></li>
-          <li><NavLink to='/gallery'>Gallery</NavLink></li>
-          <li><NavLink to='/about'>About</NavLink></li>
-          <li><NavLink to='/contact'>Contact</NavLink></li>
-          <li><NavLink to='/archives'>Archives</NavLink></li>
+          <li onClick={() => props.click('Home')}>Home</li>
+          <li onClick={() => props.click('Gallery')}>Gallery</li>
+          <li onClick={() => props.click('About')}>About</li>
+          <li onClick={() => props.click('Contact')}>Contact</li>
         </ul>
       </div>
     </nav>
