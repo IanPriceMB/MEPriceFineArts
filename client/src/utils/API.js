@@ -1,12 +1,14 @@
+import config from '../configGlob';
+console.log(config)
 export default {
   //get all images
   getAllProducts: function(){
-    return fetch('/products', {
+    return fetch(`${config.API_URI}/products`, {
       method: "GET"
     });
   },
   loginAdmin: function(adminData){
-    return fetch('/user/login', {
+    return fetch(`${config.API_URI}/user/login`, {
       method: "POST", 
       headers: {
         'Accept': 'application/json',
@@ -16,7 +18,7 @@ export default {
     });
   },
   newProduct: function(token, data){
-    return fetch(`/products`, {
+    return fetch(`${config.API_URI}/products`, {
       method: "POST",
       headers: {
         'Authorization': `${token}`
@@ -25,12 +27,12 @@ export default {
     });
   },
   getOneProduct: function(id){
-    return fetch('/products/' + id,{
+    return fetch(`${config.API_URI}/products${id}`,{
       method: "GET"
     });
   }, 
   deleteProduct: function(token, id){
-    return fetch('/products/' + id, {
+    return fetch(`${config.API_URI}/products${id}`, {
       method: "DELETE",
       headers: {
         'Authorization': `${token}`
@@ -38,7 +40,7 @@ export default {
     });
   },
   updateProduct: function(token, data, id){
-    return fetch('/products/' +id, {
+    return fetch(`${config.API_URI}/products${id}`, {
       method: "PATCH",
       headers: {
         'Accept': 'application/json',

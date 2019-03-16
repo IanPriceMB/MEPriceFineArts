@@ -17,11 +17,8 @@ class Gallery extends Component {
   loadImages = () => {
     API.getAllProducts()
     .then(data => data.json())
-    .then(res => {
-      this.setState({
-        images: res
-      }); 
-      console.log(res);
+    .then(images => {this.setState({images}); 
+      console.log(images);
     })
     .catch(err => console.log(err))
   };

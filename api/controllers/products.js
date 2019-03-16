@@ -2,7 +2,6 @@ const Product = require('../models/product');
 const mongoose = require('mongoose');
 
 exports.products_get_all = (req, res, next) => {
-    //where and limit to select further see docs
     Product.find()
     .select('name price _id productImage description')
     .exec()

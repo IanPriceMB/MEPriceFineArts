@@ -34,7 +34,7 @@ class App extends Component {
       <div className="App">
         {this.state.location === 'Admin' ? null :
         <Header click={this.changeLocation}></Header>}
-        
+
         {this.state.location === 'Home' ? 
         (<Homepage click={this.changeLocation}></Homepage>) :
         this.state.location === 'About' ?
