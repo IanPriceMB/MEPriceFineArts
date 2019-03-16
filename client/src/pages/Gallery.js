@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import API from '../utils/API';
 
+import config from '../configGlob';
+
 class Gallery extends Component {
 
   constructor(props) {
@@ -27,7 +29,7 @@ class Gallery extends Component {
     return (
       <div className="Gallery">
         {this.state.images ? ((this.state.images.products).map((image, i) => (
-          <img src={image.productImage} alt={image.name} key={i} />
+          <img src={`${config.API_URI}/${image.productImage}`} alt={image.name} key={i} />
         ))): <div>Loading images...</div>}
     </div>
     );

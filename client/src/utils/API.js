@@ -1,5 +1,5 @@
 import config from '../configGlob';
-console.log(config)
+
 export default {
   //get all images
   getAllProducts: function(){
