@@ -10,8 +10,7 @@ class Gallery extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props);
+  componentWillMount() {
     this.loadImages();
   };
 
@@ -30,9 +29,9 @@ class Gallery extends Component {
   render() {
     return (
       <div className="Gallery">
-        {(this.state.images.products).map((image, i) => (
-          <img src={image.productImage} alt={image.name} />
-        ))}
+        {this.state.images ? ((this.state.images.products).map((image, i) => (
+          <img src={image.productImage} alt={image.name} key={i} />
+        ))): <div>Loading images...</div>}
     </div>
     );
   }

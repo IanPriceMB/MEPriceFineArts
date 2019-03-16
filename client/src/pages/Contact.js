@@ -23,11 +23,12 @@ class Contact extends Component {
       <Fragment>
         <form action="mailto:someone@example.com" method="post" encType="text/plain">
           <label htmlFor='name'>Name:</label>
-          <input type='text' name='name' id='name' value={this.state.name} onChange={this.handleChange} />
+          <input type='text' name='name' id='name' value={this.state.name} onChange={this.handleChange} placeholder='John Doe'/>
           <label htmlFor='email'>Email:</label>
-          <input type='text' name='email' id='email' value={this.state.email} onChange={this.handleChange} />
+          <input type='text' name='email' id='email' value={this.state.email} onChange={this.handleChange} placeholder='johndoe@example.com'/>
           <label htmlFor='message'>Message:</label>
-          <input type='text' name='message' id='message' value={this.state.message} onChange={this.handleChange} />
+          <textarea  name='message' id='message' value={this.state.message} onChange={this.handleChange} ></textarea>
+          <input type="submit" name="submit"></input>
         </form>
       </Fragment>
     );
