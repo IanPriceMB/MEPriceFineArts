@@ -12,18 +12,14 @@ module.exports ={
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: [/node_modules/],
         use: {
           loader: 'babel-loader'
         }
       },
       {
-        test: /\.sass/,
-        use: [
-          "style-loader",
-          "css-loader",
-          "sass-loader"
-        ]
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(gif|png|jpe?g|svg|webp|mp4|mp3)$/i,

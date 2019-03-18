@@ -16,6 +16,10 @@ class Gallery extends Component {
     this.loadImages();
   };
 
+  bigImage = (e) => {
+    console.log(e.target.src);
+  }
+
   loadImages = () => {
     API.getAllProducts()
     .then(data => data.json())
@@ -29,7 +33,11 @@ class Gallery extends Component {
     return (
       <div className="Gallery">
         {this.state.images ? ((this.state.images.products).map((image, i) => (
-          <img src={`${config.API_URI}/${image.productImage}`} alt={image.name} key={i} />
+          <img 
+            src={`${config.API_URI}/${image.productImage}`} 
+            alt={image.name} 
+            key={i}
+            onClick={(e) => this.bigImage(e)} />
         ))): <div>Loading images...</div>}
     </div>
     );
