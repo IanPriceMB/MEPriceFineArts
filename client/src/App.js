@@ -8,8 +8,9 @@ import Gallery from './pages/Gallery';
 import Contact from './pages/Contact';
 
 // Components
-import Header from './components/Header'
-
+import Header from './components/Header/Header'
+import SideDrawer from './components/SideDrawer/SideDrawer';
+import Backdrop from './components/Backdrop/Backdrop';
 
 class App extends Component {
   constructor(props){
@@ -34,7 +35,8 @@ class App extends Component {
       <div className="App">
         {this.state.location === 'Admin' ? null :
         <Header click={this.changeLocation}></Header>}
-
+        <SideDrawer></SideDrawer>
+        <Backdrop />
         {this.state.location === 'Home' ? 
         (<Homepage click={this.changeLocation}></Homepage>) :
         this.state.location === 'About' ?
