@@ -16,7 +16,8 @@ class App extends Component {
   constructor(props){
     super(props)
     this.state = {
-      location: 'Home'
+      location: 'Home',
+      sideDrawerOpen: false
     };
   };
 
@@ -30,13 +31,29 @@ class App extends Component {
     };
   };
 
+  drawerToggleClickHandler = () => {
+    this.setState((prevState) => {
+      return {sideDrawerOpen: !prevState.sideDrawerOpen};
+    });
+  };
+
+  backdropClickHandler = () => {
+    this.setState({sideDrawerOpen: false})
+  }
+
   render() {
+    let backdrop;
+    
+    if (this.state.sideDrawerOpen) {
+      backdrop = <Backdrop click={this.backdropClickHandler}/>;
+    };
+
     return (
       <div className="App">
         {this.state.location === 'Admin' ? null :
-        <Header click={this.changeLocation}></Header>}
-        <SideDrawer></SideDrawer>
-        <Backdrop />
+        <Header toggle={this.drawerToggleClickHandler} click={this.changeLocation}></Header>}
+        <SideDrawer show={this.state.sideDrawerOpen}/>
+        {backdrop}
         {this.state.location === 'Home' ? 
         (<Homepage click={this.changeLocation}></Homepage>) :
         this.state.location === 'About' ?

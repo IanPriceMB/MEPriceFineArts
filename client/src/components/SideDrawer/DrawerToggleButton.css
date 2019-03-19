@@ -25,3 +25,14 @@
 .toggle-button:hover .toggle-button__line{
   background: #534c49;
 }
+
+
+#side-Drawer .toggle-button__line:first-child{
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px) ;
+  transform: rotate(-45deg) translate(-9px, 6px) ;
+}
+#side-Drawer .toggle-button__line:last-child{
+  -webkit-transform: rotate(45deg) translate(-8px, -8px) ;
+  transform: rotate(45deg) translate(-8px, -8px) ;
+}
+
